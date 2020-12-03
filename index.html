@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="chart.css" />
+  </head>
+  <body>
+    <script type="module">
+      import { h, Component, render } from 'https://unpkg.com/preact?module';
+      import Spline from './spline.component.js';
+      import { scale, range } from './utils.js';
+
+      import { years, countries } from './data/life-expectancy.js';
+      console.log({ years, countries });
+
+      const Legend = ({ position, ticks }) => {
+        const [start, end] = [ticks[0], ticks[ticks.length - 1]];
+        const legendScale = scale([start, end], position === 'left' ? [0, 100] : [100, 0]);
+
+        return ticks.map((tick) => h('span', { style: `${position}:${legendScale(tick)}%` }, tick));
+      };
+
+      const xLegend = h(Legend, { position: 'left', ticks: range(1960, 2020, 10) });
+      const yLegend = h(Legend, { position: 'top', ticks: range(0, 90, 10) });
+      const xScale = scale([1960, 2020], [0, 300]);
+      const yScale = scale([0, 90], [100, 0]);
+
+      const random = ~~(Math.random() * 264);
+
+      const App = h(
+        'main',
+        null,
+        h('h1', null, countries[random].name),
+        h(
+          'div',
+          { class: 'chart' },
+          h('div', { class: 'x axis' }, xLegend),
+          h('div', { class: 'y axis' }, yLegend),
+          h(Spline, { points: countries[random].data, xScale, yScale }, 'test')
+        )
+      );
+
+      render(App, document.body);
+    </script>
+  </body>
+</html>
