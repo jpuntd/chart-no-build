@@ -1,0 +1,7 @@
+# data files
+data
+
+# components
+*.component.js
+
+index.html

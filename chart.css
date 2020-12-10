@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   padding: 50px;
 }
@@ -41,5 +45,7 @@ div.chart {
 }
 
 .spline {
-  background-color: coral;
+  display: block;
+  border-bottom: 1px dashed goldenrod;
+  width: 100%;
 }
